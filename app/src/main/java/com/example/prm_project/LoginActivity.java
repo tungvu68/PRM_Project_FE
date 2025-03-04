@@ -63,8 +63,11 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try{
-                            int userId = response.getInt("userId");
-                            String detail = response.getString("firstName") + response.getString("lastName");
+                            JSONObject responseData = response.getJSONObject("response_data");
+
+                            JSONObject userData = responseData.getJSONObject("data");
+                            int userId = userData.getInt("userId");
+                            String detail = userData.getString("firstName") + userData.getString("lastName");
 
                             Toast.makeText(LoginActivity.this,
                                     "Login successful! Welcome " + detail,
@@ -117,8 +120,6 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             email.setError(null);
         }
-
-
 
         //check password
         if (passwordStr.isEmpty()) {
